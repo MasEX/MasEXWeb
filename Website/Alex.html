@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
-<darken>
 <head>
 	<title>Alex's HTML</title>
 </head>
 <style>
 html { 
-  	background: url(minimal-earth.jpg) no-repeat center center fixed; 
-  	background-size: cover;
+  	background-color: #444;
 }
-darken{
-	background:  url(darken.png) no-repeat center center fixed; 
-	background-size: cover;
+div {
+	width: 100%;
+	height: 100%;
+	
 }
 table {
 	width: 100%;
@@ -20,7 +19,7 @@ table {
     margin: 0;
     padding: 0;
     font-size: 500;
-    background-color: #333;
+    background-color: #333;	
 } 
 a {
 	font-family: 'Century Gothic', sans-serif;
@@ -28,17 +27,108 @@ a {
 	color: #EEEEEE;
 	text-decoration: none;
 }
+button {
+  color: #DDD;
+  background: #666;
+  font-weight: bold;
+  width: 250px;
+  height: 52px;
+  padding-left: 5px;
+}
+ 
+button:hover {
+  color: #FFF;
+  background: #999;
+}
+
+input{
+	background-color: #EEE;
+	height: 50px;
+	width: 600px;
+	font-family: 'Century Gothic', sans-serif;
+    font-size: 200%;
+    border: 0px;
+    text-align: center;
+}
 </style>
 <body>
-<table>
+<table style="text-align: center;">
   <tr>
-    <th><a style="font-size: 200%" href="Alex.html">Alex</a></th>
-    <th><a style="font-size: 200%" href="Zuraiz.html">Zuraiz</a></th>
-    <th><a style="font-size: 200%" href="Jin.html" >Jin</a></th>
-    <th><a style="font-size: 200%" href="Stephen.html">Stephen</a></th>
+    <th><a onmouseover="startTone(200)" onmouseout="stopTone()" style="font-size: 200%" href="Alex.html">Alex</a></th>
+    <th><a onmouseover="startTone(300)" onmouseout="stopTone()" style="font-size: 200%" href="Zuraiz.html">Zuraiz</a></th>
+    <th><a onmouseover="startTone(400)" onmouseout="stopTone()" style="font-size: 200%" href="Jin.html" >Jin</a></th>
+    <th><a onmouseover="startTone(500)" onmouseout="stopTone()" style="font-size: 200%" href="Stephen.html">Stephen</a></th>
   </tr>
 </table>
-<p>This is a thing that is Alex's</p>
+<table style="background-color: #444">
+<tr>
+	<th style="height: 400px"> </th>
+	<th style="height: 400px"> </th>
+	<th style="height: 400px"> </th>
+</tr>
+<tr>
+	<th style="text-align: right;"><button onclick="stopTone()" style="border: 0px;">Stop All Sounds</button></th>
+	<th style="width: 600px"><input style="margin: 0px;" type="text" id="soundText"></th>
+	<th style="text-align: left;"><button onclick="playText(soundText.value)" style="border: 0px">Play Text</button></th>
+</tr>
+</table>
 </body>
-</darken>
+<footer><a href="index.html">Go back to Home Page</a>
+</footer>
+
+<!--<script type="text/javascript">
+var oscillator;
+var amp;
+
+// Create an oscillator and an amplifier.
+function initAudio() {
+    // Use audioContext from webaudio_tools.js
+    if( audioContext )
+    {
+        oscillator = audioContext.createOscillator();
+        fixOscillator(oscillator);
+        oscillator.frequency.value = 440;
+        amp = audioContext.createGain();
+        amp.gain.value = 0;
+    
+        // Connect oscillator to amp and amp to the mixer of the audioContext.
+        // This is like connecting cables between jacks on a modular synth.
+        oscillator.connect(amp);
+        amp.connect(audioContext.destination);
+        oscillator.start(0);
+        writeMessageToID( "soundStatus", "<p>Audio initialized.</p>");
+    }
+}
+
+// Set the frequency of the oscillator and start it running.
+function startTone( frequency ) {
+    var now = audioContext.currentTime;
+    
+    oscillator.frequency.setValueAtTime(frequency, now);
+    
+    // Ramp up the gain so we can hear the sound.
+    // We can ramp smoothly to the desired value.
+    // First we should cancel any previous scheduled events that might interfere.
+    amp.gain.cancelScheduledValues(now);
+    // Anchor beginning of ramp at current value.
+    amp.gain.setValueAtTime(amp.gain.value, now);
+    amp.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.1);
+    
+    writeMessageToID( "soundStatus", "<p>Play tone at frequency = " + frequency  + "</p>");
+}
+
+function stopTone() {
+    var now = audioContext.currentTime;
+    amp.gain.cancelScheduledValues(now);
+    amp.gain.setValueAtTime(amp.gain.value, now);
+    amp.gain.linearRampToValueAtTime(0.0, audioContext.currentTime + 1.0);
+    writeMessageToID( "soundStatus", "<p>Stop tone.</p>");
+}
+
+// init once the page has finished loading.
+window.onload = initAudio;
+}
+</script> -->
+<script type="text/javascript" src="webaudio_tools.js"> </script>
+<script type="text/javascript" src="tone.js"> </script>
 </html>
